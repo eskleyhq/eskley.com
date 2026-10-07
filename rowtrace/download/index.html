@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- DRAFT. Not linked from anywhere and kept out of search engines until the
+     download goes live. Live only with an exe that has passed the clean-machine
+     run (docs/roadmap.md, App functionality item 1, in eskleyhq/platform).
+     Every <mark class="gap"> is a fact still owed; the PR lists them. -->
+<meta name="robots" content="noindex, nofollow">
+<title>Download Rowtrace</title>
+<meta name="description" content="Download Rowtrace, a Windows app that backs up your Smartsheet sheets and attachments to a folder you choose, with every attachment filed under the row it came from.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #1f62c4;
+    --accent-hover: #184f9f;
+    --accent-ink: #ffffff;
+    --text-primary: #1b1e23;
+    --text-muted: #5b6270;
+    --text-inverse: #f7f7f7;
+    --surface: #ffffff;
+    --bg: #f4f5f7;
+    --bg-alt: #eceef1;
+    --border: #d9dce1;
+    --warn-soft: #fdf0d5;
+    --warn: #b97b00;
+    --space-1: 8px; --space-2: 16px; --space-3: 24px; --space-4: 32px;
+    --space-6: 48px; --space-10: 80px;
+    --radius-24: 24px;
+    --radius-full: 9999px;
+    --shadow-card: 0 1px 2px rgba(27, 30, 35, 0.06), 0 8px 24px rgba(27, 30, 35, 0.06);
+    --font-display: "Montserrat", sans-serif;
+    --font-body: "IBM Plex Sans", sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text-primary);
+    font: 400 17px/1.6 var(--font-body);
+  }
+  a { color: var(--accent); transition: color 120ms ease; }
+  a:focus-visible, .button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 var(--space-2); }
+  header { padding: var(--space-4) 0; display: flex; align-items: center; gap: var(--space-2); flex-wrap: wrap; }
+  .wordmark { font: 700 24px/1 var(--font-display); color: var(--text-primary); text-decoration: none; }
+  .by { color: var(--text-muted); font-size: 14px; }
+  .tldr { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-24);
+    padding: var(--space-3); margin-bottom: var(--space-10); }
+  .eyebrow { font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--text-muted); display: block; margin-bottom: var(--space-1); }
+  h1, h2 { font-family: var(--font-display); font-weight: 700; line-height: 1.2; }
+  h1 { font-size: 40px; margin: 0 0 var(--space-2); }
+  h2 { font-size: 26px; margin: 0 0 var(--space-2); }
+  p, ul, ol { max-width: 65ch; margin: 0 0 var(--space-2); }
+  li { margin-bottom: var(--space-1); }
+  .answer { font-weight: 600; }
+  section { margin-bottom: var(--space-10); }
+  .card { background: var(--surface); border-radius: var(--radius-24); box-shadow: var(--shadow-card);
+    padding: var(--space-4); }
+  .button { display: inline-block; background: var(--accent); color: var(--accent-ink); text-decoration: none;
+    font-weight: 600; padding: 12px var(--space-4); border-radius: var(--radius-full); margin-bottom: var(--space-3); }
+  .button:hover { background: var(--accent-hover); color: var(--accent-ink); }
+  dl { display: grid; grid-template-columns: max-content 1fr; gap: var(--space-1) var(--space-3); margin: 0; }
+  dt { color: var(--text-muted); }
+  dd { margin: 0; overflow-wrap: anywhere; }
+  code, pre { font-family: var(--font-mono); font-size: 14px; }
+  pre { background: var(--bg-alt); border: 1px solid var(--border); border-radius: 8px;
+    padding: var(--space-2); overflow-x: auto; margin: 0 0 var(--space-2); max-width: 100%; }
+  /* Draft-only: a fact this page still owes. Remove the rule and every mark before going live. */
+  mark.gap { background: var(--warn-soft); color: var(--text-primary); border: 1px dashed var(--warn);
+    border-radius: 4px; padding: 0 4px; font-weight: 600; }
+  footer { border-top: 1px solid var(--border); padding: var(--space-3) 0 var(--space-6);
+    color: var(--text-muted); font-size: 14px; }
+  @media (max-width: 560px) {
+    h1 { font-size: 32px; }
+    dl { grid-template-columns: 1fr; }
+    dd { margin-bottom: var(--space-1); }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="wordmark" href="/rowtrace/download/">Rowtrace</a>
+    <span class="by">by <a href="/">Eskley LLC</a></span>
+  </header>
+
+  <main>
+    <div class="tldr">
+      <span class="eyebrow">TL;DR</span>
+      <p class="answer">Rowtrace is one code-signed Windows program. Download it, double-click it, paste a Smartsheet API token and choose a folder. There is nothing to install and no account to create.</p>
+    </div>
+
+    <section>
+      <h1>Download Rowtrace</h1>
+      <p class="answer">Rowtrace backs up your Smartsheet sheets, their attachments and your reports to a folder you choose, with every attachment filed under the row it came from.</p>
+      <p>It is in its design-partner phase: a small group of Smartsheet administrators are running it and telling us what breaks. During that phase it is free.</p>
+      <div class="card">
+        <a class="button" href="#" aria-disabled="true">Download Rowtrace.exe</a>
+        <dl>
+          <dt>File</dt>
+          <dd>Rowtrace.exe, <mark class="gap">GAP 1: file size</mark></dd>
+          <dt>Version</dt>
+          <dd><mark class="gap">GAP 2: version and build date of the exe that passed the clean-machine run</mark></dd>
+          <dt>Signed by</dt>
+          <dd><mark class="gap">GAP 3: publisher name as Windows shows it (Raymond's name today; Eskley LLC after the publisher switch)</mark></dd>
+          <dt>SHA-256</dt>
+          <dd><code><mark class="gap">GAP 4: hash of the published file</mark></code></dd>
+          <dt>Runs on</dt>
+          <dd>Windows <mark class="gap">GAP 5: Windows versions the clean-machine run covered</mark></dd>
+        </dl>
+      </div>
+    </section>
+
+    <section>
+      <h2>What do I need before I start?</h2>
+      <p class="answer">A Windows computer, a Smartsheet API token and somewhere to save the backup.</p>
+      <ul>
+        <li><strong>A Windows computer</strong> you are signed in to when backups run. Scheduled backups run as you, only while you are signed in.</li>
+        <li><strong>A Smartsheet.com account.</strong> Smartsheet EU, Smartsheet AU and Smartsheet Gov accounts are not supported yet.</li>
+        <li><strong>A Smartsheet API access token.</strong> In Smartsheet: Account, then Personal Settings, then API Access, then Generate new access token. Smartsheet shows it once, so copy it.</li>
+        <li><strong>Somewhere to save:</strong> a local drive, a OneDrive folder or a network drive.</li>
+      </ul>
+      <p>Rowtrace sees exactly what the token's user can see in Smartsheet, no more. To back up a workspace, the token has to come from someone shared to it.</p>
+    </section>
+
+    <section>
+      <h2>Will Windows warn me when I open it?</h2>
+      <p class="answer"><mark class="gap">GAP 6: what Windows actually shows the first time the signed exe opens on a clean machine</mark></p>
+      <p>Rowtrace is new, and Windows builds trust in a program as more people run it. If you see "Windows protected your PC", choose More info, check that the publisher matches the one above, then choose Run anyway.</p>
+      <p>To check the file yourself before you run it, open PowerShell in the folder you saved it to and run:</p>
+<pre>Get-AuthenticodeSignature .\Rowtrace.exe | Format-List Status, SignerCertificate
+Get-FileHash .\Rowtrace.exe -Algorithm SHA256</pre>
+      <p>Status should read <code>Valid</code>, and the hash should match the SHA-256 above.</p>
+    </section>
+
+    <section>
+      <h2>What happens after I open it?</h2>
+      <p class="answer">You connect once, then choose what to back up, when and where.</p>
+      <ol>
+        <li><strong>Connect.</strong> Paste your token and choose Connect to Smartsheet. Rowtrace saves the token on this computer, encrypted to your Windows user, so you won't paste it again.</li>
+        <li><strong>New backup.</strong> Tick the workspaces, folders, sheets and reports to back up, choose Now, once or On a schedule, and pick a save location.</li>
+        <li><strong>Open the result.</strong> Each run makes a new timestamped folder holding an Excel copy of each sheet, a folder per row with that row's attachments, and a manifest that says which file came from which row.</li>
+      </ol>
+      <p>The full walkthrough is in the <a href="#"><mark class="gap">GAP 7: link to the quick-start guide once its page exists</mark></a>. What happens to your token, step by step, is on <a href="#"><mark class="gap">GAP 8: link to the token page once it exists</mark></a>.</p>
+    </section>
+
+    <section>
+      <h2>What doesn't Rowtrace do yet?</h2>
+      <p class="answer">It doesn't put data back into Smartsheet, and it doesn't back up dashboards.</p>
+      <ul>
+        <li>It doesn't restore into Smartsheet. It is a backup you can open and read, not a way to put data back.</li>
+        <li>Dashboards aren't backed up.</li>
+        <li>Sheets in your Sheets folder that aren't in a workspace don't appear yet. Move them into a workspace to back them up.</li>
+        <li>Attachments stored as links to Google Drive, OneDrive, Box, Dropbox or a web address are recorded in the manifest, not downloaded.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Who do I tell when something goes wrong?</h2>
+      <p class="answer">Email <a href="mailto:raymond@eskley.com">raymond@eskley.com</a>. During the design-partner phase you are writing to the person who built it.</p>
+      <p>Anything that confused you, broke or was missing is worth a line. That feedback is the point of this phase.</p>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2026 Eskley LLC, a Utah limited liability company. Rowtrace is an independent product for Smartsheet and is not affiliated with or endorsed by Smartsheet Inc.
+  </footer>
+</div>
+</body>
+</html>

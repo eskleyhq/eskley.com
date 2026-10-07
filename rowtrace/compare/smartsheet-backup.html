@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Rowtrace vs. Smartsheet's own backup (draft)</title>
+<meta name="description" content="What Smartsheet's built-in backup gives you, what it leaves out, and what Rowtrace does differently.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="compare.css">
+</head>
+<body>
+<div class="draft-banner">Draft, not for publication. Yellow <span class="gap">items</span> are unsupported claims to resolve or cut before this page goes live.</div>
+<div class="wrap">
+  <header>
+    <a class="wordmark" href="/"><span class="mono-tile" aria-hidden="true">e</span>eskley</a>
+    <nav aria-label="Comparisons">
+      <a href="smartsheet-backup.html" aria-current="page">vs. Smartsheet's backup</a>
+      <a href="backup-tools.html">vs. other backup tools</a>
+      <a href="row-mapping-explained.html">How row mapping works</a>
+    </nav>
+  </header>
+
+  <main>
+    <span class="eyebrow">Comparison</span>
+    <h1>Why not just use Smartsheet's backup?</h1>
+    <div class="tldr">
+      <span class="eyebrow">TL;DR</span>
+      <p class="answer">Smartsheet's backup gives you Excel copies of your sheets and every attachment dropped in one folder, with nothing to say which row a file came from. Rowtrace gives you the same sheets with every attachment filed under its row, and a manifest that maps each file back.</p>
+    </div>
+
+    <section>
+      <h2>What does Smartsheet's backup give you?</h2>
+      <p class="answer">A zip with an Excel copy of each sheet and the uploaded attachments together in one folder.</p>
+      <p>A workspace backup comes as Excel files in a zip.<sup><a href="#s2">2</a></sup> <span class="gap">G11: Comments go on separate tabs and inline images get their own folder. Recurring backups run weekly, between Saturday and Monday, on Business and Enterprise plans, and only workspace owners and admins can set them up. Each backup is capped at 4 GB.</span></p>
+      <p><span class="gap">G12: What it leaves out, in Smartsheet's own words: reports, dashboards, formulas, workflows, cross-sheet references, formatting, and attachments from Google Drive, OneDrive, Box, Dropbox, Evernote, Egnyte or URLs.</span></p>
+    </section>
+
+    <section>
+      <h2>Where does it hurt?</h2>
+      <p class="answer">Every uploaded attachment lands in one folder, and nothing says which row it came from.</p>
+      <p>A sheet with 300 rows and 1,000 attachments becomes 1,000 files side by side, and the only map back to the rows is your memory.<sup><a href="#s1">1</a></sup> One Smartsheet Community member describes reconciling attachments to rows by hand every month, and says Smartsheet isn't viable in regulated spaces.<sup><a href="#s3">3</a></sup> And when something does go wrong, admins have spent years in the Community describing rebuilding sheets by hand and losing formulas, links and automations.<sup><a href="#s3">3</a></sup></p>
+    </section>
+
+    <section>
+      <h2>What does Rowtrace do instead?</h2>
+      <p class="answer">It keeps the row. Each row's attachments get their own folder, and a manifest records which file belonged to which row and what the row said at the time.</p>
+      <div class="table-scroll">
+      <table>
+        <thead>
+          <tr><th scope="col"></th><th scope="col">Smartsheet's backup</th><th scope="col">Rowtrace</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Attachments</th>
+            <td>One folder for the whole backup<sup><a href="#s1">1</a></sup></td>
+            <td class="us">A folder per row, holding that row's attachments</td></tr>
+          <tr><th scope="row">Which file came from which row</th>
+            <td>Not recorded<sup><a href="#s1">1</a></sup></td>
+            <td class="us">A manifest maps every file to its row and records what the row said at the time</td></tr>
+          <tr><th scope="row">Folder and workspace structure</th>
+            <td><span class="gap">G13: Smartsheet Help says workspace backups "include sheet data, not the workspace's structure"; a Community answer says the zip keeps the folder structure. Settle before publishing</span></td>
+            <td class="us">Kept: your folders become folders</td></tr>
+          <tr><th scope="row">How often</th>
+            <td><span class="gap">G11: Weekly, Saturday to Monday</span></td>
+            <td class="us">Daily, or on the weekdays you pick, at a time you choose</td></tr>
+          <tr><th scope="row">Who can schedule it</th>
+            <td><span class="gap">G11: Workspace owners and admins on Business or Enterprise</span></td>
+            <td class="us">Anyone with an API token, for what that token can see</td></tr>
+          <tr><th scope="row">Earlier versions of an attachment</th>
+            <td><span class="gap">G14: Not covered by Smartsheet's help; needs a test backup</span></td>
+            <td class="us">Kept beside the current one</td></tr>
+          <tr><th scope="row">Linked files (Drive, OneDrive, Box, URLs)</th>
+            <td><span class="gap">G12: Left out</span></td>
+            <td class="us">Listed in the manifest with their links; the files themselves stay where they are</td></tr>
+          <tr><th scope="row">Reports</th>
+            <td><span class="gap">G12: Left out</span></td>
+            <td class="us">Report data exported to Excel on whole-workspace backups</td></tr>
+          <tr><th scope="row">Checked after it's written</th>
+            <td><span class="gap">G15: No check documented</span></td>
+            <td class="us">Every file checked against the size Smartsheet reported</td></tr>
+          <tr><th scope="row">Where it lives</th>
+            <td>A zip you download, then wherever you put it<sup><a href="#s2">2</a></sup></td>
+            <td class="us">Your folder, from the start</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>What does Smartsheet's backup still do that Rowtrace doesn't?</h2>
+      <p class="answer"><span class="gap">G16: It runs without your computer, and it costs nothing extra.</span></p>
+      <p><span class="gap">G16: Smartsheet's backup runs on Smartsheet's servers, so your computer doesn't need to be on, and it's included in Business and Enterprise plans.</span> Rowtrace runs on your Windows computer, which has to be on and logged in at the scheduled time. Neither one puts data back into Smartsheet for you: Rowtrace doesn't restore, and admins restoring from Smartsheet's backup describe rebuilding by hand.<sup><a href="#s3">3</a></sup></p>
+      <p>Need a backup that restores? See <a href="backup-tools.html">how Rowtrace compares with the backup services that do</a>.</p>
+    </section>
+
+    <section id="contact">
+      <h2>Want to try it?</h2>
+      <p>Rowtrace is in its design-partner phase. Write to <a href="mailto:raymond@eskley.com">raymond@eskley.com</a> and you'll be writing to the person who built it.</p>
+    </section>
+
+    <section class="sources" id="sources">
+      <h2>Sources</h2>
+      <ol>
+        <li id="s1">The founder's own account of Smartsheet's backup, as a long-time Smartsheet administrator. <span class="gap">G17: first-hand, not independently sourced; the 300-row, 1,000-attachment figure is illustrative</span></li>
+        <li id="s2">Smartsheet Community, <a href="https://community.smartsheet.com/discussion/comment/477750">"Can I download an entire workspace?"</a>, read 2026-10-03.</li>
+        <li id="s3">Smartsheet Community, <a href="https://community.smartsheet.com/en/discussion/103330/smartsheet-backup-and-recovery/p1">Smartsheet backup and recovery</a> (2023–2026) and <a href="https://community.smartsheet.com/discussion/145852/">discussion 145852</a> (2026-03-23), read 2026-10-06.</li>
+      </ol>
+    </section>
+  </main>
+
+  <footer>
+    Rowtrace is made by Eskley LLC for Smartsheet administrators. Not affiliated with or endorsed by Smartsheet Inc.
+  </footer>
+</div>
+</body>
+</html>

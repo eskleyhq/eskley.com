@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Rowtrace: your token and your data</title>
+<meta name="description" content="What Rowtrace does with your Smartsheet API token, where your backup goes, and the limits worth knowing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/partners/partners.css">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="wordmark" href="/partners/">Rowtrace</a>
+    <nav aria-label="Design-partner pages">
+      <a href="/partners/">Overview</a>
+      <a href="/partners/start/">Getting started</a>
+      <a href="/partners/token/" aria-current="page">Your token and your data</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="tldr">
+      <span class="eyebrow">TL;DR</span>
+      <p class="answer">Your token is used only to call Smartsheet, is saved encrypted to your Windows user on your computer, and you can revoke it at any time. Your backup goes to the folder you pick and nowhere else.</p>
+    </div>
+
+    <section>
+      <span class="eyebrow">Security</span>
+      <h1>Where does my token go?</h1>
+      <p class="answer">To Smartsheet, and nowhere else.</p>
+      <p>Rowtrace needs a Smartsheet API access token, which you generate yourself in Smartsheet under <strong>Account → Personal Settings → API Access</strong>. Here is everything that happens to it.</p>
+
+      <h3>You paste it in</h3>
+      <p>Rowtrace uses the token to call the Smartsheet API, and for nothing else. The only servers Rowtrace talks to are Smartsheet's: its API, and the download links Smartsheet hands back for your attachments.</p>
+
+      <h3>It's saved, encrypted, on your computer</h3>
+      <p>Rowtrace saves the token so scheduled backups can run without you. It's encrypted with Windows' built-in data protection (DPAPI), which ties it to your Windows user on this computer. Copied to another computer, or opened by another Windows user, the saved file can't be read. It's kept in <code>%LOCALAPPDATA%\Eskley</code>, outside OneDrive, so it doesn't sync anywhere.</p>
+      <div class="limit">
+        <p><strong>The limit worth knowing.</strong> DPAPI protects the token from other people and other computers, not from other programs running as you. Anything that runs under your Windows user, malware included, could read it. That's true of every app that saves a credential this way, and it's why the next two points matter.</p>
+      </div>
+
+      <h3>You can take it back at any time</h3>
+      <p>Revoke the token in Smartsheet under API Access and Rowtrace can no longer reach your account. Choose <strong>Forget this account</strong> beside the saved account in Rowtrace to delete the local copy.</p>
+    </section>
+
+    <section>
+      <h2>Which account's token should I use?</h2>
+      <p class="answer">Ideally a dedicated account that's shared to what you want backed up, not your own.</p>
+      <p>A token can do anything its user can do in Smartsheet, and Smartsheet itself recommends a shared account for API work (<a href="https://developers.smartsheet.com/api/smartsheet/guides/basics/authentication">Smartsheet API authentication guide</a>). A dedicated account also keeps backups running when people change roles: if a user is deactivated, their tokens are revoked with them (<a href="https://help.smartsheet.com/articles/2483484-admin-center-deactivate-or-reactivate-users">Smartsheet Help</a>).</p>
+      <p>Rowtrace sees exactly what the token's user can see. A token from someone who isn't shared to a workspace won't back it up.</p>
+      <p>If your plan sets an expiry on every access token (Enterprise plans can, in Admin Center: <a href="https://help.smartsheet.com/articles/2483100-configure-access-token-expiration-time">Smartsheet Help</a>), backups stop when the token expires. Generate a new one and connect again.</p>
+      <p class="gap">Whether a scheduled run that hits an expired or revoked token tells you so, and where, isn't verified yet. This paragraph says only that backups stop.</p>
+    </section>
+
+    <section>
+      <h2>Where does my data go?</h2>
+      <p class="answer">To the folder you pick, and nowhere else.</p>
+      <p>There's no Eskley server, no account to create, and nothing for Rowtrace to send usage data to. Your backup is plain folders and files you can open in File Explorer and Excel without Rowtrace installed.</p>
+    </section>
+
+    <section>
+      <h2>Which Smartsheet accounts does it work with?</h2>
+      <p class="answer">Accounts on smartsheet.com only, for now.</p>
+      <p>Smartsheet's EU, Australia and Gov regions use their own API addresses and their own tokens (<a href="https://help.smartsheet.com/articles/2482446-introducing-smartsheet-regions">Smartsheet Help</a>). Rowtrace doesn't connect to them yet. If your Smartsheet address ends in anything other than smartsheet.com, tell us before you start.</p>
+    </section>
+
+    <section>
+      <h2>How do I know the app came from you?</h2>
+      <p class="answer">Rowtrace is a single code-signed Windows program, so Windows shows who signed it before it runs.</p>
+      <p class="gap">Today the publisher Windows shows is Raymond's personal name, not Eskley LLC. This page should either name the publisher partners will actually see, or wait until the switch to Eskley LLC lands.</p>
+      <p>If your organization only allows approved software, a signed program may still need your IT team to approve it before it will run. Signing tells them who made it; it doesn't approve it on their behalf.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Questions about any of this: <a href="mailto:raymond@eskley.com">raymond@eskley.com</a>.</p>
+    <p>Rowtrace is made by <a href="/">Eskley LLC</a>. It is an independent product for Smartsheet and is not affiliated with or endorsed by Smartsheet Inc.</p>
+  </footer>
+</div>
+</body>
+</html>

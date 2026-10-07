@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Rowtrace: getting started</title>
+<meta name="description" content="What you need, how to connect Rowtrace to Smartsheet, and how to run your first backup.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/partners/partners.css">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="wordmark" href="/partners/">Rowtrace</a>
+    <nav aria-label="Design-partner pages">
+      <a href="/partners/">Overview</a>
+      <a href="/partners/start/" aria-current="page">Getting started</a>
+      <a href="/partners/token/">Your token and your data</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="tldr">
+      <span class="eyebrow">TL;DR</span>
+      <p class="answer">Open Rowtrace.exe, paste a Smartsheet API token, pick what to back up and where, and run. Each row's attachments land in a folder for that row.</p>
+    </div>
+
+    <section>
+      <span class="eyebrow">Getting started</span>
+      <h1>How do I run my first backup?</h1>
+      <p>Rowtrace backs up your Smartsheet sheets, their attachments and the data in your reports to a folder you choose, with each row's attachments filed in a folder for that row and a manifest that says which file came from which row. It runs on your Windows computer. Nothing is sent anywhere else.</p>
+    </section>
+
+    <section>
+      <h2>What do I need before I start?</h2>
+      <ul>
+        <li>A Windows computer you're logged on to when backups run.</li>
+        <li>A Smartsheet account on smartsheet.com. The EU, Australia and Gov regions aren't supported yet.</li>
+        <li>A Smartsheet API access token. In Smartsheet: <strong>Account → Personal Settings → API Access → Generate new access token</strong>. Copy it; Smartsheet shows it once.</li>
+        <li>Somewhere to save: a local drive, a OneDrive folder or a network drive.</li>
+      </ul>
+      <p>Rowtrace sees exactly what the token's user can see, no more. If you want a workspace backed up, the token has to come from someone shared to it. A dedicated account works best; <a href="/partners/token/">Your token and your data</a> explains why.</p>
+      <p class="gap">How partners get Rowtrace.exe: link to the download page once it exists. The download page is a separate draft, and no exe goes out until the clean-machine run has passed.</p>
+    </section>
+
+    <section>
+      <h2>1. Open Rowtrace</h2>
+      <p>Double-click <strong>Rowtrace.exe</strong>. There's no installer; it opens in its own window.</p>
+      <p class="gap">What Windows shows the first time (for example "Windows protected your PC", then More info, check the publisher, Run anyway) waits on the clean-machine run, and the publisher name waits on the switch to Eskley LLC.</p>
+    </section>
+
+    <section>
+      <h2>2. Connect</h2>
+      <p>Paste your token and choose <strong>Connect to Smartsheet</strong>. Rowtrace saves the token on this computer, encrypted to your Windows user, so you won't paste it again.</p>
+    </section>
+
+    <section>
+      <h2>3. Your first backup</h2>
+      <p>Choose <strong>New backup</strong>:</p>
+      <ol>
+        <li><strong>Select items.</strong> Tick the workspaces, folders, sheets and reports to back up.</li>
+        <li><strong>When.</strong> <em>Now, once</em> to try it out, or <em>On a schedule</em>: every day or on the weekdays you pick, at a time you choose.</li>
+        <li><strong>Where.</strong> Pick a save location and a folder layout: <em>By row number, flat</em> works for any sheet; <em>By primary column, keep row hierarchy</em> names folders from the first column and nests them like the sheet.</li>
+        <li><strong>Review</strong>, then <strong>Back up now</strong> or <strong>Save schedule</strong>.</li>
+      </ol>
+      <p>Backing up a large account for the first time? Choose <strong>Plan a first backup</strong> instead. It counts what you have and spreads the first full copy over the nights you allow, so no single run takes all night.</p>
+    </section>
+
+    <section>
+      <h2>4. What do I get?</h2>
+      <p>Each run makes a new timestamped folder, so runs never overwrite each other. Inside it, every sheet has an Excel copy, a folder per row holding that row's attachments, and a manifest (CSV and a readable HTML page) mapping every file to its row and recording what the row said at the time. Earlier versions of an attachment are kept in <code>_versions</code> beside it.</p>
+      <p>After the first run, each run copies forward what hasn't changed and downloads only what has, so later runs are short. <strong>History</strong> lists every run, and <strong>Open backup folder</strong> takes you straight to the result.</p>
+    </section>
+
+    <section>
+      <h2>What does Windows decide, not Rowtrace?</h2>
+      <ul>
+        <li>A schedule runs as you, on this computer, only while you're logged on. Lock the screen instead of signing out.</li>
+        <li>A sleeping laptop doesn't run backups. Keep it awake at the scheduled time.</li>
+        <li>By default Windows only starts a scheduled task on mains power. Plug in.</li>
+        <li>If you move Rowtrace.exe, save each schedule again.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>What doesn't Rowtrace do yet?</h2>
+      <ul>
+        <li>It doesn't restore into Smartsheet. It's a backup you can open and read, not a way to put data back.</li>
+        <li>Dashboards aren't backed up.</li>
+        <li>Files linked from Google Drive, OneDrive, Box, Dropbox or a URL are listed in the manifest with their links; the files themselves stay where they are.</li>
+        <li>Sheets in your <strong>Sheets</strong> folder that aren't in a workspace don't appear yet. Move them into a workspace to back them up.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Who do I tell when something's wrong?</h2>
+      <p>Write to <a href="mailto:raymond@eskley.com">raymond@eskley.com</a>. Feedback is the point of the design-partner phase, so anything that confused you, broke or was missing is worth a line.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Rowtrace is made by <a href="/">Eskley LLC</a>. It is an independent product for Smartsheet and is not affiliated with or endorsed by Smartsheet Inc.</p>
+  </footer>
+</div>
+</body>
+</html>

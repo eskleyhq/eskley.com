@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Rowtrace vs. ProBackup, AcuWorkflow and FluentPro (draft)</title>
+<meta name="description" content="How Rowtrace compares with ProBackup, AcuWorkflow SmartBackup and FluentPro Backup for Smartsheet, from each vendor's own pages.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="compare.css">
+</head>
+<body>
+<div class="draft-banner">Draft, not for publication. Yellow <span class="gap">items</span> are unsupported claims to resolve or cut before this page goes live.</div>
+<div class="wrap">
+  <header>
+    <a class="wordmark" href="/"><span class="mono-tile" aria-hidden="true">e</span>eskley</a>
+    <nav aria-label="Comparisons">
+      <a href="smartsheet-backup.html">vs. Smartsheet's backup</a>
+      <a href="backup-tools.html" aria-current="page">vs. other backup tools</a>
+      <a href="row-mapping-explained.html">How row mapping works</a>
+    </nav>
+  </header>
+
+  <main>
+    <span class="eyebrow">Comparison</span>
+    <h1>How does Rowtrace compare to ProBackup, AcuWorkflow and FluentPro?</h1>
+    <div class="tldr">
+      <span class="eyebrow">TL;DR</span>
+      <p class="answer">ProBackup and FluentPro restore into Smartsheet, and AcuWorkflow lets you copy back by hand. Rowtrace doesn't restore. What it does instead is keep the record: every attachment filed under the row it came from, a manifest that maps each file to its row, earlier versions of each attachment, all in a folder you choose. Pick by your hard requirement: putting data back, or holding a record you can open and hand to an auditor.</p>
+    </div>
+
+    <section id="table">
+      <h2>What does each tool actually do?</h2>
+      <p class="answer">The three vendors are built around getting data back into Smartsheet. Rowtrace is built around a copy you can read without Smartsheet or Rowtrace.</p>
+      <p>Competitor details come from each vendor's own pages, checked 6 October 2026. "Not documented" means we couldn't find it in the vendor's documentation, not that the product can't do it.</p>
+      <div class="table-scroll">
+      <table>
+        <thead>
+          <tr><th scope="col"></th><th scope="col">Rowtrace</th><th scope="col">ProBackup</th><th scope="col">AcuWorkflow SmartBackup</th><th scope="col">FluentPro Backup</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Restore into Smartsheet</th>
+            <td class="us">No</td>
+            <td>Yes, rows and sheets, restored as duplicates; formulas and formatting aren't restored<sup><a href="#s1">1</a></sup></td>
+            <td>By hand: copy and paste from the backup copy<sup><a href="#s4">4</a></sup></td>
+            <td>Yes: as a copy, merged, or replacing the original<sup><a href="#s6">6</a></sup></td></tr>
+          <tr><th scope="row">Attachments filed under their row</th>
+            <td class="us">Yes, a folder per row</td>
+            <td>Not documented</td>
+            <td>Not documented. Its attachment index records each file's parent row (added July 2026)<sup><a href="#s5">5</a></sup></td>
+            <td>Not documented</td></tr>
+          <tr><th scope="row">A map of which file belongs to which row</th>
+            <td class="us">Yes. A manifest pairs every file with its row and records what the row said at the time</td>
+            <td>Not documented</td>
+            <td>The attachment index above</td>
+            <td>Not documented</td></tr>
+          <tr><th scope="row">Earlier versions of each attachment</th>
+            <td class="us">Kept beside the current one</td>
+            <td>Not documented</td>
+            <td>Not documented</td>
+            <td>Not documented</td></tr>
+          <tr><th scope="row">Linked files (Google Drive, OneDrive, Box, Dropbox, URLs)</th>
+            <td class="us">Listed in the manifest with their links; the files stay where they are</td>
+            <td>Not documented</td>
+            <td>Not documented</td>
+            <td>Not documented</td></tr>
+          <tr><th scope="row">Where the backup lives</th>
+            <td class="us">A folder you choose: a local drive, OneDrive or a network share, as plain Excel files and folders</td>
+            <td>ProBackup's own AWS<sup><a href="#s3">3</a></sup></td>
+            <td>Vault workspaces inside your Smartsheet, plus Excel and JSON copies on disk<sup><a href="#s4">4</a></sup></td>
+            <td>FluentPro's Azure or your own, US or EU, in FluentPro's own format with no export<sup><a href="#s6">6</a></sup></td></tr>
+          <tr><th scope="row">How it connects to Smartsheet</th>
+            <td class="us">Your API token, saved encrypted on your computer</td>
+            <td>OAuth<sup><a href="#s3">3</a></sup></td>
+            <td>A System Admin's API token, on your own machine<sup><a href="#s4">4</a></sup></td>
+            <td>An authorised app whose permissions include delete<sup><a href="#s6">6</a></sup></td></tr>
+          <tr><th scope="row">Where it runs</th>
+            <td class="us">On your Windows computer, which has to be on and logged in at the scheduled time</td>
+            <td>ProBackup's cloud<sup><a href="#s3">3</a></sup></td>
+            <td>Your own Windows machine or server<sup><a href="#s4">4</a></sup></td>
+            <td>FluentPro's cloud or your Azure<sup><a href="#s6">6</a></sup></td></tr>
+          <tr><th scope="row">How often</th>
+            <td class="us">Daily, or on the weekdays you pick, at a time you choose</td>
+            <td>Daily<sup><a href="#s1">1</a></sup></td>
+            <td><span class="gap">G1: AcuWorkflow's schedule options</span></td>
+            <td><span class="gap">G2: FluentPro's schedule options</span></td></tr>
+          <tr><th scope="row">Checks each file after writing it</th>
+            <td class="us">Yes, against the size Smartsheet reported</td>
+            <td><span class="gap">G3: ProBackup file checking</span></td>
+            <td><span class="gap">G4: AcuWorkflow file checking</span></td>
+            <td><span class="gap">G5: FluentPro file checking</span></td></tr>
+          <tr><th scope="row">Smartsheet EU, AU and Gov accounts</th>
+            <td class="us">Not supported: smartsheet.com accounts only</td>
+            <td>Smartsheet EU not supported<sup><a href="#s1">1</a></sup></td>
+            <td><span class="gap">G6: AcuWorkflow region support</span></td>
+            <td><span class="gap">G7: FluentPro region support (its US/EU storage choice is not the same thing)</span></td></tr>
+          <tr><th scope="row">Needs a server other than Smartsheet's</th>
+            <td class="us">No</td>
+            <td>It is a cloud service</td>
+            <td>Yes, an online licence check<sup><a href="#s4">4</a></sup></td>
+            <td>It is a cloud service</td></tr>
+          <tr><th scope="row">Security certification</th>
+            <td class="us">None. There is no Eskley server holding your data or your token</td>
+            <td>SOC 2 Type II (May 2025)<sup><a href="#s3">3</a></sup></td>
+            <td><span class="gap">G8: AcuWorkflow certifications</span></td>
+            <td>None stated<sup><a href="#s6">6</a></sup></td></tr>
+          <tr><th scope="row">Price</th>
+            <td class="us"><span class="gap">G9: Rowtrace price not set</span></td>
+            <td>$25 to $69 a month, billed annually, priced by storage; one plan covers other SaaS apps too<sup><a href="#s2">2</a></sup></td>
+            <td>$1,490 a year for up to 5 users; Enterprise from $4,560<sup><a href="#s5">5</a></sup></td>
+            <td><span class="gap">G10: FluentPro price. Not published by FluentPro; about $50 a month per G2, second-hand</span></td></tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+
+    <section id="them">
+      <h2>Where do they beat Rowtrace?</h2>
+      <p class="answer">Three places, plainly: putting data back, running without your computer, and a certificate to hand your security team.</p>
+      <div class="cards">
+        <div class="card"><h3>They restore</h3><p>If a sheet has to be back inside Smartsheet by Friday, ProBackup and FluentPro can put it back, and AcuWorkflow gives you a copy to paste from. Rowtrace can't. Your copy is complete and readable, but getting it back into Smartsheet is by hand.</p></div>
+        <div class="card"><h3>Two run without your computer</h3><p>ProBackup and FluentPro back up from their own cloud whether or not any of your machines is on. Rowtrace, like AcuWorkflow, runs on a Windows machine you keep on.</p></div>
+        <div class="card"><h3>ProBackup has SOC 2</h3><p>If your security review starts with a SOC 2 report, ProBackup has one. Rowtrace has no certification; it has no server holding your data for one to cover.</p></div>
+      </div>
+    </section>
+
+    <section id="us">
+      <h2>Where does Rowtrace beat them?</h2>
+      <p class="answer">The record and the custody: a copy that says which file belonged to which row, in a folder you control, fetched with a token that stays on your computer.</p>
+      <div class="cards">
+        <div class="card"><h3>Every file under its row</h3><p>Each row's attachments sit in a folder for that row, with a manifest that records what the row said at the time and keeps earlier versions of each file. None of the three documents anything like it. <a href="row-mapping-explained.html">How the row mapping works</a>.</p></div>
+        <div class="card"><h3>Your folder, your token</h3><p>The backup goes to a folder you pick and nowhere else. The token is saved encrypted on your computer, and the only server Rowtrace talks to is Smartsheet's.</p></div>
+        <div class="card"><h3>Files you can open</h3><p>Plain folders and Excel files you can open in File Explorer without Rowtrace installed. FluentPro keeps its backup in its own format with no export.</p></div>
+      </div>
+    </section>
+
+    <section id="others">
+      <h2>Who else backs up Smartsheet?</h2>
+      <p>AvePoint added Smartsheet to its Cloud Backup in October 2025: up to four backups a day, seven-year retention, whole-sheet restore to a new sheet, and company-level SOC 2, ISO 27001 and FedRAMP, priced by quote.<sup><a href="#s7">7</a></sup> InfoSpark, an Australian Smartsheet partner, sells a managed backup and restore service with in-region storage.<sup><a href="#s8">8</a></sup> Klonup keeps scheduled working copies inside your own Smartsheet.<sup><a href="#s9">9</a></sup> The general SaaS backup vendors we checked, among them Rewind, Keepit, Veeam and HYCU, don't list Smartsheet.</p>
+    </section>
+
+    <section id="contact">
+      <h2>Want to try it?</h2>
+      <p>Rowtrace is in its design-partner phase. Write to <a href="mailto:raymond@eskley.com">raymond@eskley.com</a> and you'll be writing to the person who built it.</p>
+    </section>
+
+    <section class="sources" id="sources">
+      <h2>Sources</h2>
+      <ol>
+        <li id="s1">ProBackup, <a href="https://support.probackup.io/en/articles/9292176-what-data-can-be-restored-for-smartsheet">What data can be restored for Smartsheet</a>, checked 2026-10-06.</li>
+        <li id="s2">ProBackup, <a href="https://www.probackup.io/pricing">Pricing</a>, checked 2026-10-06.</li>
+        <li id="s3">ProBackup, <a href="https://www.probackup.io/pricing">probackup.io</a> and <a href="https://support.probackup.io/en/articles/9291997-what-data-is-backed-up-for-smartsheet">What data is backed up for Smartsheet</a>, checked 2026-10-06.</li>
+        <li id="s4">AcuWorkflow, <a href="https://docs.acuworkflow.com/sbu-install.html">SmartBackup installation</a> and <a href="https://docs.acuworkflow.com/sbu-admin.html">administration</a>, checked 2026-10-06.</li>
+        <li id="s5">AcuWorkflow, <a href="https://acuworkflow.com/index.html">acuworkflow.com</a> and <a href="https://docs.acuworkflow.com/sbu-admin.html">administration docs</a>, checked 2026-10-06.</li>
+        <li id="s6">FluentPro, <a href="https://fluentpro.helpjuice.com/smartsheet-environment/1407347-smartsheet-supported-entities">Smartsheet supported entities</a> and <a href="https://fluentpro.helpjuice.com/fluentpro-backup/1160265-fluentpro-backup">FluentPro Backup</a>, checked 2026-10-06.</li>
+        <li id="s7">AvePoint, <a href="https://www.avepoint.com/solutions/saas/smartsheet">Smartsheet backup</a> and <a href="https://www.avepoint.com/blog/backup/smartsheet-backup">blog</a>, checked 2026-10-06.</li>
+        <li id="s8">Smartsheet Marketplace, <a href="https://www.smartsheet.com/marketplace/apps/enterprise-backup-and-restore-smartsheet">Enterprise Backup and Restore</a>, checked 2026-10-06.</li>
+        <li id="s9">Smartsheet Marketplace, <a href="https://www.smartsheet.com/marketplace/apps/klonup-advanced-backup-smartsheet">Klonup Advanced Backup</a>, checked 2026-10-06.</li>
+      </ol>
+      <p>Product names are trademarks of their owners. Spotted something out of date? Tell us and we'll correct it.</p>
+    </section>
+  </main>
+
+  <footer>
+    Rowtrace is made by Eskley LLC for Smartsheet administrators. Not affiliated with or endorsed by Smartsheet Inc.
+  </footer>
+</div>
+</body>
+</html>

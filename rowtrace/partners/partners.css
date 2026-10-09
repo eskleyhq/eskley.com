@@ -1,24 +1,8 @@
-/* Rowtrace design-partner pages. Tokens match the eskley.com company page. */
+/* Rowtrace design-partner pages. Design tokens come from /tokens.css;
+   the two below are draft-only colours for gap notes, not design tokens. */
 :root {
-  --accent: #1f62c4;
-  --text-primary: #1b1e23;
-  --text-secondary: #3a404a;
-  --text-muted: #5b6270;
-  --text-inverse: #f7f7f7;
-  --surface: #ffffff;
-  --bg: #f4f5f7;
-  --bg-alt: #eceef1;
-  --border: #d9dce1;
   --gap-bg: #fff4d6;
   --gap-border: #e0b84a;
-  --space-1: 8px; --space-2: 16px; --space-3: 24px; --space-4: 32px;
-  --space-6: 48px; --space-10: 80px;
-  --radius-8: 8px;
-  --radius-24: 24px;
-  --shadow-card: 0 1px 2px rgba(27, 30, 35, 0.06), 0 8px 24px rgba(27, 30, 35, 0.06);
-  --font-display: "Montserrat", sans-serif;
-  --font-body: "IBM Plex Sans", sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
 }
 * { box-sizing: border-box; }
 html, body { margin: 0; }
@@ -51,10 +35,10 @@ li { margin-bottom: var(--space-1); }
 section { margin-bottom: var(--space-10); }
 code, .mono { font-family: var(--font-mono); font-size: 0.92em; }
 
-.tldr { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-24);
+.tldr { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg);
   padding: var(--space-3); margin-bottom: var(--space-10); }
 .tldr p { margin: 0; }
-.card { background: var(--surface); border-radius: var(--radius-24); box-shadow: var(--shadow-card);
+.card { background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-card);
   padding: var(--space-4); }
 .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-3); }
 .cards .card h3 { margin-top: 0; }
@@ -62,11 +46,11 @@ code, .mono { font-family: var(--font-mono); font-size: 0.92em; }
 
 /* A gap is a line the draft can't stand behind yet. It shows on the page on purpose. */
 .gap { display: block; background: var(--gap-bg); border-left: 4px solid var(--gap-border);
-  border-radius: var(--radius-8); padding: var(--space-1) var(--space-2); margin: 0 0 var(--space-2);
+  border-radius: var(--radius-md); padding: var(--space-1) var(--space-2); margin: 0 0 var(--space-2);
   max-width: 65ch; font-size: 15px; }
 .gap::before { content: "Draft gap: "; font-weight: 600; }
 
-.limit { background: var(--bg-alt); border-radius: var(--radius-8); padding: var(--space-2) var(--space-3);
+.limit { background: var(--bg-alt); border-radius: var(--radius-md); padding: var(--space-2) var(--space-3);
   max-width: 65ch; margin: 0 0 var(--space-2); }
 .limit p:last-child { margin-bottom: 0; }
 

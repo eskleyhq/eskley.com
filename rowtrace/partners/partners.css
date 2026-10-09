@@ -1,0 +1,64 @@
+/* Rowtrace design-partner pages. Design tokens come from /tokens.css;
+   the two below are draft-only colours for gap notes, not design tokens. */
+:root {
+  --gap-bg: #fff4d6;
+  --gap-border: #e0b84a;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--bg);
+  color: var(--text-primary);
+  font: 400 17px/1.6 var(--font-body);
+}
+a { color: var(--accent); transition: color 120ms ease; }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+.wrap { max-width: 960px; margin: 0 auto; padding: 0 var(--space-2); }
+
+header { padding: var(--space-4) 0; display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-4); }
+.wordmark { font: 700 24px/1 var(--font-display); color: var(--text-primary); text-decoration: none; }
+nav { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-3); }
+nav a { font-size: 15px; color: var(--text-secondary); text-decoration: none; border-bottom: 2px solid transparent; padding-bottom: 2px; }
+nav a[aria-current="page"] { color: var(--text-primary); font-weight: 600; border-bottom-color: var(--accent); }
+
+.eyebrow { font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text-muted); display: block; margin-bottom: var(--space-1); }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 700; line-height: 1.2; }
+h1 { font-size: 40px; margin: 0 0 var(--space-2); }
+h2 { font-size: 26px; margin: 0 0 var(--space-2); }
+h3 { font-size: 19px; margin: var(--space-3) 0 var(--space-1); }
+p, ul, ol { max-width: 65ch; margin: 0 0 var(--space-2); }
+li { margin-bottom: var(--space-1); }
+.answer { font-weight: 600; }
+.muted { color: var(--text-muted); }
+section { margin-bottom: var(--space-10); }
+code, .mono { font-family: var(--font-mono); font-size: 0.92em; }
+
+.tldr { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg);
+  padding: var(--space-3); margin-bottom: var(--space-10); }
+.tldr p { margin: 0; }
+.card { background: var(--surface); border-radius: var(--radius-lg); box-shadow: var(--shadow-card);
+  padding: var(--space-4); }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-3); }
+.cards .card h3 { margin-top: 0; }
+.cards .card p:last-child { margin-bottom: 0; }
+
+/* A gap is a line the draft can't stand behind yet. It shows on the page on purpose. */
+.gap { display: block; background: var(--gap-bg); border-left: 4px solid var(--gap-border);
+  border-radius: var(--radius-md); padding: var(--space-1) var(--space-2); margin: 0 0 var(--space-2);
+  max-width: 65ch; font-size: 15px; }
+.gap::before { content: "Draft gap: "; font-weight: 600; }
+
+.limit { background: var(--bg-alt); border-radius: var(--radius-md); padding: var(--space-2) var(--space-3);
+  max-width: 65ch; margin: 0 0 var(--space-2); }
+.limit p:last-child { margin-bottom: 0; }
+
+footer { border-top: 1px solid var(--border); padding: var(--space-3) 0 var(--space-6);
+  color: var(--text-muted); font-size: 14px; }
+footer p { max-width: none; margin: 0 0 var(--space-1); }
+
+@media (max-width: 560px) {
+  h1 { font-size: 32px; }
+  .card { padding: var(--space-3); }
+}

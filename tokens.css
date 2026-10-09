@@ -1,0 +1,84 @@
+/* Eskley DS_Blue — generated from tokens.json */
+:root, [data-theme="light"] {
+  --bg: #f7f7f7;
+  --bg-alt: #ededed;
+  --bg-alt-hover: #e0e0e0;
+  --surface: #ffffff;
+  --surface-2: #fafafa;
+  --border: #d6d6d6;
+  --border-light: #e6e6e6;
+  --accent: #1f62c4;
+  --accent-hover: #184f9f;
+  --accent-soft: #dde9fb;
+  --accent-ink: #ffffff;
+  --text-primary: #1b1e23;
+  --text-secondary: #474c53;
+  --text-muted: #62676e;
+  --text-inverse: #f7f7f7;
+  --danger: #b0402c;
+  --danger-soft: #f9ebe7;
+  --warn: #b97b00;
+  --warn-soft: #fdf0d5;
+  --ok: #0b7650;
+  --ok-soft: #e3f3ec;
+  --obj-sheet: #1a5dc8;
+  --obj-report: #dd6b20;
+  --obj-dashboard: #2e7d4f;
+  --obj-workspace: #474c53;
+  --rail: #11335a;
+  --rail-current: #3a5f8a;
+  --rail-ink: #f2f5f9;
+  --rail-ink-off: #8397ad;
+  --shadow-card: 0 1px 2px rgba(27,30,35,0.04), 0 4px 16px rgba(27,30,35,0.06);
+  --shadow-raised: 0 12px 32px rgba(27,30,35,0.10);
+}
+:root {
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 40px;
+  --space-6: 48px;
+  --space-8: 64px;
+  --space-10: 80px;
+  --space-12: 96px;
+  --space-16: 128px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 24px;
+  --radius-full: 9999px;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 2rem;
+  --text-3xl: 2.75rem;
+  --text-4xl: 3.5rem;
+  --app-narrow: 720px;
+  --list-row: 30px;
+  --picker-row: 26px;
+  --form-text: 14px;
+  --form-leading: 1.5;
+  --form-row: 40px;
+  --form-control: 36px;
+  --form-pad: 24px;
+  --form-gap: 16px;
+  --dense-text: 13px;
+  --dense-leading: 1.4;
+  --dense-control: 28px;
+  --dense-pad: 16px;
+  --dense-gap: 8px;
+  --font-body: "IBM Plex Sans", system-ui, sans-serif;
+  --font-display: "Montserrat", "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+.text-4xl { font-family: var(--font-display); font-size: 3.5rem; line-height: 1.15; font-weight: 700; letter-spacing: -0.02em; }
+.text-3xl { font-family: var(--font-display); font-size: 2.75rem; line-height: 1.15; font-weight: 700; letter-spacing: -0.02em; }
+.text-2xl { font-family: var(--font-display); font-size: 2rem; line-height: 1.15; font-weight: 700; }
+.text-xl { font-family: var(--font-display); font-size: 1.5rem; line-height: 1.15; font-weight: 700; }
+.text-lg { font-family: var(--font-display); font-size: 1.25rem; line-height: 1.15; font-weight: 700; }
+.text-base { font-family: var(--font-body); font-size: 1rem; line-height: 1.7; font-weight: 400; }
+.text-sm { font-family: var(--font-body); font-size: 0.875rem; line-height: 1.7; font-weight: 400; }
+.text-xs { font-family: var(--font-body); font-size: 0.75rem; line-height: 1.7; font-weight: 600; letter-spacing: 0.08em; }
+.code { font-family: var(--font-mono); font-size: 0.875rem; line-height: 1.6; font-weight: 400; }

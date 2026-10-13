@@ -1,88 +1,106 @@
 <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex, nofollow">
-<title>How Rowtrace maps attachments to rows (draft)</title>
+<html lang="en" data-site="rowtrace">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>How Rowtrace maps attachments to rows</title>
 <meta name="description" content="Why Smartsheet's backup can't tell you which row an attachment came from, what the Smartsheet API returns, and how Rowtrace uses it.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/tokens.css">
-<link rel="stylesheet" href="compare.css">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<link rel="stylesheet" href="/tokens.css"><link rel="stylesheet" href="/site.css">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "Article",
+   "headline": "Why can't Smartsheet's backup map attachments to rows?",
+   "url": "https://eskley.com/rowtrace/compare/row-mapping-explained.html",
+   "description": "Why Smartsheet's backup can't tell you which row an attachment came from, what the Smartsheet API returns, and how Rowtrace uses it.",
+   "author": {
+    "@id": "https://eskley.com/#org"
+   },
+   "publisher": {
+    "@id": "https://eskley.com/#org"
+   },
+   "about": {
+    "@type": "Product",
+    "name": "Rowtrace"
+   }
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://eskley.com/#org",
+   "name": "Eskley LLC",
+   "alternateName": "eskley",
+   "url": "https://eskley.com/",
+   "email": "raymond@eskley.com",
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "2155 West Western Charm Drive",
+    "addressLocality": "Riverton",
+    "addressRegion": "UT",
+    "postalCode": "84065",
+    "addressCountry": "US"
+   }
+  }
+ ]
+}
+</script>
 </head>
 <body>
-<div class="draft-banner">Draft, not for publication. Yellow <span class="gap">items</span> are unsupported claims to resolve or cut before this page goes live.</div>
-<div class="wrap">
-  <header>
-    <a class="wordmark" href="/"><span class="mono-tile" aria-hidden="true">e</span>eskley</a>
-    <nav aria-label="Comparisons">
-      <a href="smartsheet-backup.html">vs. Smartsheet's backup</a>
-      <a href="backup-tools.html">vs. other backup tools</a>
-      <a href="row-mapping-explained.html" aria-current="page">How row mapping works</a>
-    </nav>
-  </header>
-
-  <main>
-    <span class="eyebrow">Technical explainer</span>
-    <h1>Why can't Smartsheet's backup map attachments to rows?</h1>
-    <div class="tldr">
-      <span class="eyebrow">TL;DR</span>
-      <p class="answer">Because the export doesn't write down what the API already knows. Every attachment Smartsheet stores carries a reference to its parent: a row, a comment or the sheet itself. The backup drops that reference and puts every file in one folder. Rowtrace keeps it.</p>
-    </div>
-
-    <section>
-      <h2>What does the API return?</h2>
-      <p class="answer">Each attachment record names its parent, and for a row attachment the parent is the row.</p>
-      <p><code>GET /sheets/{sheetId}/attachments</code> lists every attachment on a sheet:</p>
-<pre>{
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<symbol id="i-folder" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2.25 12 V4.75 A1.5 1.5 0 0 1 3.75 3.25 H6.25 L7.75 5 H12.25 A1.5 1.5 0 0 1 13.75 6.5 V12 A1.5 1.5 0 0 1 12.25 13.5 H3.75 A1.5 1.5 0 0 1 2.25 12 Z" fill="currentColor" fill-opacity="0.12"/></symbol>
+<symbol id="i-sheet" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2.25" y="2.75" width="11.5" height="10.5" rx="1.5" fill="currentColor" fill-opacity="0.12"/><path d="M2.25 6.25 H13.75 M5.75 6.25 V13.25"/></symbol>
+<symbol id="i-report" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2.25" y="2.75" width="11.5" height="10.5" rx="1.5" fill="currentColor" fill-opacity="0.12"/><path d="M4.75 5.75 H11.25 M4.75 8 H11.25 M4.75 10.25 H8.5"/></symbol>
+<symbol id="i-done" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3.25 8.75 L6.5 11.75 L12.75 4.5"/></symbol>
+<symbol id="i-history" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2.25 8 A5.75 5.75 0 1 0 2.79 5.5 M2.75 2.5 V5.5 H5.75"/><path d="M8 5 V8 L10 9.25"/></symbol>
+<symbol id="i-schedules" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2.25" y="3.25" width="11.5" height="10.5" rx="1.5" fill="currentColor" fill-opacity="0.12"/><path d="M2.25 6.75 H13.75 M5.5 1.75 V4.5 M10.5 1.75 V4.5 M5.25 10.25 H6.75 M9.25 10.25 H10.75"/></symbol>
+<symbol id="i-account" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="5" r="2.5" fill="currentColor" fill-opacity="0.12"/><path d="M2.75 13.5 V13 A4 4 0 0 1 6.75 9 H9.25 A4 4 0 0 1 13.25 13 V13.5 Z" fill="currentColor" fill-opacity="0.12"/></symbol>
+</svg>
+<div class="draft-banner">Draft, not for publication. Yellow <mark class="gap">items</mark> are unsupported claims to resolve or cut before this page goes live.</div>
+<header class="site-header"><div class="wrap bar">
+<a class="brand" href="/rowtrace/"><span class="mark mark-r m24" aria-hidden="true"><span>R</span></span><span class="wordmark">Rowtrace</span></a>
+<nav class="nav" aria-label="Rowtrace"><a href="/rowtrace/">Overview</a><a href="/rowtrace/compare/smartsheet-backup.html">Compare</a><a href="/rowtrace/compare/row-mapping-explained.html" aria-current="page">How row mapping works</a><a href="/rowtrace/partners/">Partners</a></nav>
+<div class="bar-end"><a class="byline" href="/"><span class="by-text">by</span> <span class="mark mark-e m16" aria-hidden="true"><span>e</span></span> <b>eskley</b></a>
+<a class="btn btn-primary" href="/rowtrace/download/">Download</a></div>
+</div></header>
+<main>
+<div class="wrap"><div class="page-head"><span class="eyebrow">Technical explainer</span><h1>Why can't Smartsheet's backup map attachments to rows?</h1><p class="lead"><strong>Because the export doesn't write down what the API already knows.</strong> Every attachment Smartsheet stores carries a reference to its parent: a row, a comment or the sheet itself. The backup drops that reference and puts every file in one folder. Rowtrace keeps it.</p><nav class="subnav" aria-label="Comparisons"><a href="/rowtrace/compare/smartsheet-backup.html">vs. Smartsheet's backup</a><a href="/rowtrace/compare/backup-tools.html">vs. ProBackup, AcuWorkflow and FluentPro</a><a href="/rowtrace/compare/row-mapping-explained.html" aria-current="page">How row mapping works</a></nav></div></div><div class="wrap doc"><div class="body"><section class="sec" id="api"><h2>What does the API return?</h2><p class="answer">Each attachment record names its parent, and for a row attachment the parent is the row.</p><p><code>GET /sheets/{sheetId}/attachments</code> lists every attachment on a sheet:</p><pre><code>{
   "name": "master-services-agreement.pdf",
   "parentType": "ROW",
   "parentId": 4583173393803140,
   "attachmentType": "FILE",
   "sizeInKb": 842
-}</pre>
-      <p><code>parentId</code> is the row. That one field is the whole mapping.</p>
-    </section>
-
-    <section>
-      <h2>What trips up a home-made script?</h2>
-      <p class="answer">Three things: files attached to comments, multi-contact columns, and earlier versions.</p>
-      <h3>Files attached to comments</h3>
-      <p>A file attached to a comment belongs to the comment, not the row. To file it under the right row you have to read the sheet's discussions and follow the comment to the row it sits on.</p>
-      <h3>Multi-contact columns</h3>
-      <p>Read a sheet without <code>level=2</code> and a multi-contact column comes back as plain text with its options stripped.</p>
-      <h3>Earlier versions</h3>
-      <p>Each version of an attachment is its own record. To keep the history you ask for the versions explicitly; the sheet only shows the current one.</p>
-    </section>
-
-    <section>
-      <h2>What does Rowtrace do with it?</h2>
-      <p class="answer">It files each attachment under its row, writes a manifest pairing every file with its row, and checks every file it writes.</p>
-      <p>For each sheet you choose, Rowtrace reads the attachment list, files each attachment in a folder for its row, exports the sheet to Excel, and writes a manifest pairing every file with its row and what the row said at the time. After the first backup, a sheet whose version hasn't moved is carried forward from the last backup instead of downloaded again. When it has moved, Rowtrace rereads the attachment list and downloads only what's new.</p>
-      <p>Every file is checked after it's written: a downloaded file against the size Smartsheet reported, a carried-forward file against the size the last backup recorded. The result is the first line of every backup's manifest.</p>
-    </section>
-
-    <section>
-      <h2>What are your options?</h2>
-      <p class="answer">Write it yourself, pay a backup service, or run Rowtrace.</p>
-      <ol>
-        <li><strong>Write your own script.</strong> The API gives you everything above. You also own paging, rate limits, retries, scheduling, checking and upkeep, including after whoever wrote it moves on.</li>
-        <li><strong>Use a backup service.</strong> ProBackup and FluentPro run in their own cloud, so your computer doesn't need to be on, and both restore into Smartsheet. Each holds an authorisation to your account, and the copy of your data sits in ProBackup's AWS, or in FluentPro's Azure or your own. <a href="backup-tools.html">How they compare</a>.</li>
-        <li><strong>Run Rowtrace.</strong> The mapping, scheduling and checking are done, on your computer, into your folder. No restore yet.</li>
-      </ol>
-    </section>
-
-    <section id="contact">
-      <h2>Want to try it?</h2>
-      <p>Rowtrace is in its design-partner phase. Write to <a href="mailto:raymond@eskley.com">raymond@eskley.com</a> and you'll be writing to the person who built it.</p>
-    </section>
-  </main>
-
-  <footer>
-    Rowtrace is made by Eskley LLC for Smartsheet administrators. Not affiliated with or endorsed by Smartsheet Inc.
-  </footer>
-</div>
-</body>
-</html>
+}</code></pre><p><code>parentId</code> is the row. That one field is the whole mapping.</p></section><section class="sec" id="trips"><h2>What trips up a home-made script?</h2><p class="answer">Three things: files attached to comments, multi-contact columns, and earlier versions.</p><h3>Files attached to comments</h3><p>A file attached to a comment belongs to the comment, not the row. To file it under the right row you have to read the sheet's discussions and follow the comment to the row it sits on.</p><h3>Multi-contact columns</h3><p>Read a sheet without <code>level=2</code> and a multi-contact column comes back as plain text with its options stripped.</p><h3>Earlier versions</h3><p>Each version of an attachment is its own record. To keep the history you ask for the versions explicitly; the sheet only shows the current one.</p></section><section class="sec" id="does"><h2>What does Rowtrace do with it?</h2><p class="answer">It files each attachment under its row, writes a manifest pairing every file with its row, and checks every file it writes.</p><div class="trees"><div><span class="tl">Smartsheet's backup</span><div class="tree" role="img" aria-label="Illustration of Smartsheet's backup: a zip with an Excel copy of the sheet and every attachment in one folder.">
+<div class="cap">Illustration</div>
+<ul><li><span class="row fo"><svg class="" aria-hidden="true"><use href="#i-folder"/></svg> Workspace backup.zip</span>
+<ul><li><span class="row sh"><svg class="" aria-hidden="true"><use href="#i-sheet"/></svg> Vendor contracts.xlsx</span></li>
+<li><span class="row fo"><svg class="" aria-hidden="true"><use href="#i-folder"/></svg> attachments</span>
+<ul><li><span class="row">master-services-agreement.pdf</span></li><li><span class="row">insurance-certificate.pdf</span></li><li><span class="row">signed-amendment-v2.pdf</span></li><li><span class="row">w9.pdf</span></li><li><span class="row muted">… every other file, no row</span></li></ul></li>
+</ul></li></ul></div></div><div><span class="tl">Rowtrace</span><div class="tree" role="img" aria-label="Illustration of a Rowtrace backup folder: a timestamped run folder holding a workspace, an Excel copy of each sheet, a folder per row with that row's attachments, earlier versions, and a manifest.">
+<div class="cap">What one backup run looks like · illustration</div>
+<ul><li><span class="row fo"><svg class="" aria-hidden="true"><use href="#i-folder"/></svg> Rowtrace 2026-10-13 0200</span>
+<ul>
+<li><span class="row fo"><svg class="" aria-hidden="true"><use href="#i-folder"/></svg> Operations</span><span class="note">your workspace</span>
+<ul>
+<li><span class="row sh"><svg class="" aria-hidden="true"><use href="#i-sheet"/></svg> Vendor contracts.xlsx</span></li>
+<li><span class="row fo"><svg class="" aria-hidden="true"><use href="#i-folder"/></svg> Vendor contracts_sht</span>
+<ul>
+<li class="hl"><span class="row"><svg class="" aria-hidden="true"><use href="#i-folder"/></svg> Row 0014</span><span class="note">one folder per row</span>
+<ul><li><span class="row">master-services-agreement.pdf</span></li><li><span class="row fo"><svg class="" aria-hidden="true"><use href="#i-folder"/></svg> _versions</span><span class="note">earlier versions</span></li></ul></li>
+<li class="hl"><span class="row"><svg class="" aria-hidden="true"><use href="#i-folder"/></svg> Row 0015</span>
+<ul><li><span class="row">insurance-certificate.pdf</span></li></ul></li>
+</ul></li>
+</ul></li>
+<li><span class="row">Rowtrace Manifest.csv</span><span class="note">every file, its row and the result</span></li>
+<li><span class="row">Rowtrace Manifest.html</span></li>
+</ul></li></ul></div></div></div><p>For each sheet you choose, Rowtrace reads the attachment list, files each attachment in a folder for its row, exports the sheet to Excel, and writes a manifest pairing every file with its row and what the row said at the time. After the first backup, a sheet whose version hasn't moved is carried forward from the last backup instead of downloaded again. When it has moved, Rowtrace rereads the attachment list and downloads only what's new.</p><p>Every file is checked after it's written: a downloaded file against the size Smartsheet reported, a carried-forward file against the size the last backup recorded. The result is the first line of every backup's manifest.</p></section><section class="sec" id="options"><h2>What are your options?</h2><p class="answer">Write it yourself, pay a backup service, or run Rowtrace.</p><div class="cards"><div class="card"><h3>Write your own script</h3><p>The API gives you everything above. You also own paging, rate limits, retries, scheduling, checking and upkeep, including after whoever wrote it moves on.</p></div><div class="card"><h3>Use a backup service</h3><p>ProBackup and FluentPro run in their own cloud, so your computer doesn't need to be on, and both restore into Smartsheet. Each holds an authorisation to your account, and the copy of your data sits in ProBackup's AWS, or in FluentPro's Azure or your own. <a href="/rowtrace/compare/backup-tools.html">How they compare.</a></p></div><div class="card"><h3>Run Rowtrace</h3><p>The mapping, scheduling and checking are done, on your computer, into your folder. No restore yet.</p><a class="btn btn-primary" href="/rowtrace/download/">Download Rowtrace</a></div></div></section></div></div><div class="cta-band"><div class="wrap"><h2>Want to try it?</h2><p>Rowtrace is in its design-partner phase, and during that phase it is free. Write to <a class="mono" href="mailto:raymond@eskley.com">raymond@eskley.com</a> and you'll be writing to the person who built it.</p><a class="btn btn-primary" href="/rowtrace/download/">Download Rowtrace</a></div></div>
+</main>
+<footer class="site-footer"><div class="wrap">
+<div class="cols">
+<div><a class="brand" href="/rowtrace/"><span class="mark mark-r m24" aria-hidden="true"><span>R</span></span><span class="wordmark" style="font-size:1.125rem">Rowtrace</span></a>
+<p style="margin-top:12px">Backup for Smartsheet administrators. Made by <a href="/">Eskley LLC</a>.</p></div>
+<div><div class="f-head">Rowtrace</div><ul><li><a href="/rowtrace/download/">Download</a></li><li><a href="/rowtrace/partners/">Partner overview</a></li><li><a href="/rowtrace/partners/start/">Getting started</a></li><li><a href="/rowtrace/partners/token/">Your token and your data</a></li></ul></div>
+<div><div class="f-head">Compare</div><ul><li><a href="/rowtrace/compare/smartsheet-backup.html">vs. Smartsheet's backup</a></li><li><a href="/rowtrace/compare/backup-tools.html">vs. other backup tools</a></li><li><a href="/rowtrace/compare/row-mapping-explained.html">How row mapping works</a></li></ul></div>
+<div><div class="f-head">Company</div><ul><li><a href="/">eskley.com</a></li><li><a class="mono" href="mailto:raymond@eskley.com">raymond@eskley.com</a></li></ul></div>
+</div><div class="legal"><p>© 2026 Eskley LLC, a Utah limited liability company. Rowtrace is an independent product for Smartsheet and is not affiliated with or endorsed by Smartsheet Inc.</p></div></div></footer>
+</body></html>

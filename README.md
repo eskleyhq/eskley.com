@@ -8,4 +8,4 @@ eskley.com company page, and the Rowtrace pages under `/rowtrace/` until rowtrac
 
 `/site.css` is the one stylesheet for every page: eskley.com (solid navy header and footer) and the Rowtrace pages (white header with an accent rule), picked by `data-site` on `<html>`. It comes from the site design artifact (https://claude.ai/artifact/GwpeeyTrcBDFnjZhVnCkqn, version 1791922948-497d) and takes every value from `/tokens.css`.
 
-The Rowtrace pages are `noindex` and nothing on the company page links to them yet. Yellow `Gap` marks are facts still owed; resolve or cut each one before a page goes live.
+The Rowtrace pages are `noindex`; the company page links to the Rowtrace home, the download page and the comparisons. Yellow `Gap` marks are facts still owed; resolve or cut each one before a page goes live.

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en" data-site="rowtrace">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Rowtrace for design partners</title>
+<meta name="description" content="What Rowtrace is, how to get started, what happens to your Smartsheet token, and who to write to.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<link rel="stylesheet" href="/tokens.css"><link rel="stylesheet" href="/site.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<symbol id="i-folder" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2.25 12 V4.75 A1.5 1.5 0 0 1 3.75 3.25 H6.25 L7.75 5 H12.25 A1.5 1.5 0 0 1 13.75 6.5 V12 A1.5 1.5 0 0 1 12.25 13.5 H3.75 A1.5 1.5 0 0 1 2.25 12 Z" fill="currentColor" fill-opacity="0.12"/></symbol>
+<symbol id="i-sheet" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2.25" y="2.75" width="11.5" height="10.5" rx="1.5" fill="currentColor" fill-opacity="0.12"/><path d="M2.25 6.25 H13.75 M5.75 6.25 V13.25"/></symbol>
+<symbol id="i-report" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2.25" y="2.75" width="11.5" height="10.5" rx="1.5" fill="currentColor" fill-opacity="0.12"/><path d="M4.75 5.75 H11.25 M4.75 8 H11.25 M4.75 10.25 H8.5"/></symbol>
+<symbol id="i-done" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3.25 8.75 L6.5 11.75 L12.75 4.5"/></symbol>
+<symbol id="i-history" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2.25 8 A5.75 5.75 0 1 0 2.79 5.5 M2.75 2.5 V5.5 H5.75"/><path d="M8 5 V8 L10 9.25"/></symbol>
+<symbol id="i-schedules" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2.25" y="3.25" width="11.5" height="10.5" rx="1.5" fill="currentColor" fill-opacity="0.12"/><path d="M2.25 6.75 H13.75 M5.5 1.75 V4.5 M10.5 1.75 V4.5 M5.25 10.25 H6.75 M9.25 10.25 H10.75"/></symbol>
+<symbol id="i-account" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="5" r="2.5" fill="currentColor" fill-opacity="0.12"/><path d="M2.75 13.5 V13 A4 4 0 0 1 6.75 9 H9.25 A4 4 0 0 1 13.25 13 V13.5 Z" fill="currentColor" fill-opacity="0.12"/></symbol>
+</svg>
+<header class="site-header"><div class="wrap bar">
+<a class="brand" href="/rowtrace/"><span class="mark mark-r m24" aria-hidden="true"><span>R</span></span><span class="wordmark">Rowtrace</span></a>
+<nav class="nav" aria-label="Rowtrace"><a href="/rowtrace/">Overview</a><a href="/rowtrace/compare/smartsheet-backup.html">Compare</a><a href="/rowtrace/compare/row-mapping-explained.html">How row mapping works</a><a href="/rowtrace/partners/" aria-current="page">Partners</a></nav>
+<div class="bar-end"><a class="byline" href="/"><span class="by-text">by</span> <span class="mark mark-e m16" aria-hidden="true"><span>e</span></span> <b>eskley</b></a>
+<a class="btn btn-primary" href="/rowtrace/download/">Download</a></div>
+</div></header>
+<main>
+<div class="wrap"><div class="page-head"><span class="eyebrow">For design partners</span><h1>What is Rowtrace?</h1><p class="lead"><strong>Rowtrace is a Windows app that backs up your Smartsheet sheets to a folder you choose, with every attachment filed under the row it came from.</strong></p><nav class="subnav" aria-label="Design partner guide"><a href="/rowtrace/partners/" aria-current="page">Overview</a><a href="/rowtrace/partners/start/">Getting started</a><a href="/rowtrace/partners/token/">Your token and your data</a></nav></div></div><div class="wrap doc"><div class="body"><section class="sec" id="what"><p>Rowtrace backs up your Smartsheet sheets, their attachments and the data in your reports to a folder you choose: a local drive, a OneDrive folder or a network share. Each row's attachments are filed in a folder for that row, beside an Excel copy of the sheet, with a manifest that maps every file to its row and records what the row said at the time.</p><p>It runs on a schedule you set, carries forward what hasn't changed, keeps earlier versions of each attachment, and checks every file it writes against the size Smartsheet reported. Your API token and your data stay on your computer. Rowtrace doesn't restore into Smartsheet; it's the backup you can open, read and hand to an auditor.</p></section><section class="sec" id="start"><h2>Where do I start?</h2><div class="links-grid"><a class="link-tile" href="/rowtrace/download/"><strong>Download Rowtrace</strong>The signed program, what you need, and what Windows will ask the first time.<span class="go">Download</span></a><a class="link-tile" href="/rowtrace/partners/start/"><strong>Getting started</strong>What you need, how to connect, and your first backup, step by step.<span class="go">Read the guide</span></a><a class="link-tile" href="/rowtrace/partners/token/"><strong>Your token and your data</strong>Exactly what happens to your Smartsheet API token, and where your backup goes.<span class="go">Read the page</span></a></div></section><section class="sec" id="write"><h2>Who do I write to?</h2><p class="answer">Questions, problems or feedback: <a class="mono" href="mailto:raymond@eskley.com">raymond@eskley.com</a>.</p><p>During the design-partner phase you're writing to the person who built it. Anything that confused you, broke or was missing is worth a line.</p></section></div></div>
+</main>
+<footer class="site-footer"><div class="wrap">
+<div class="cols">
+<div><a class="brand" href="/rowtrace/"><span class="mark mark-r m24" aria-hidden="true"><span>R</span></span><span class="wordmark" style="font-size:1.125rem">Rowtrace</span></a>
+<p style="margin-top:12px">Backup for Smartsheet administrators. Made by <a href="/">Eskley LLC</a>.</p></div>
+<div><div class="f-head">Rowtrace</div><ul><li><a href="/rowtrace/download/">Download</a></li><li><a href="/rowtrace/partners/">Partner overview</a></li><li><a href="/rowtrace/partners/start/">Getting started</a></li><li><a href="/rowtrace/partners/token/">Your token and your data</a></li></ul></div>
+<div><div class="f-head">Compare</div><ul><li><a href="/rowtrace/compare/smartsheet-backup.html">vs. Smartsheet's backup</a></li><li><a href="/rowtrace/compare/backup-tools.html">vs. other backup tools</a></li><li><a href="/rowtrace/compare/row-mapping-explained.html">How row mapping works</a></li></ul></div>
+<div><div class="f-head">Company</div><ul><li><a href="/">eskley.com</a></li><li><a class="mono" href="mailto:raymond@eskley.com">raymond@eskley.com</a></li></ul></div>
+</div><div class="legal"><p>© 2026 Eskley LLC, a Utah limited liability company. Rowtrace is an independent product for Smartsheet and is not affiliated with or endorsed by Smartsheet Inc.</p></div></div></footer>
+</body></html>

@@ -88,11 +88,11 @@
           <dt>Version</dt>
           <dd><mark class="gap">GAP 2: version and build date of the exe that passed the clean-machine run</mark></dd>
           <dt>Signed by</dt>
-          <dd><mark class="gap">GAP 3: publisher name as Windows shows it (Raymond's name today; Eskley LLC after the publisher switch)</mark></dd>
+          <dd>Eskley LLC</dd>
           <dt>SHA-256</dt>
           <dd><code><mark class="gap">GAP 4: hash of the published file</mark></code></dd>
           <dt>Runs on</dt>
-          <dd>Windows <mark class="gap">GAP 5: Windows versions the clean-machine run covered</mark></dd>
+          <dd>Windows 10 <mark class="gap">GAP 5: Windows 11, not yet tested</mark></dd>
         </dl>
       </div>
     </section>
@@ -111,8 +111,8 @@
 
     <section>
       <h2>Will Windows warn me when I open it?</h2>
-      <p class="answer"><mark class="gap">GAP 6: what Windows actually shows the first time the signed exe opens on a clean machine</mark></p>
-      <p>Rowtrace is new, and Windows builds trust in a program as more people run it. If you see "Windows protected your PC", choose More info, check that the publisher matches the one above, then choose Run anyway.</p>
+      <p class="answer">Yes, the first time. Windows shows "Windows protected your PC" because Rowtrace is new, not because anything is wrong with it.</p>
+      <p>Windows builds trust in a program as more people run it. Choose More info, check that it reads Publisher: Eskley LLC, then choose Run anyway.</p>
       <p>To check the file yourself before you run it, open PowerShell in the folder you saved it to and run:</p>
 <pre>Get-AuthenticodeSignature .\Rowtrace.exe | Format-List Status, SignerCertificate
 Get-FileHash .\Rowtrace.exe -Algorithm SHA256</pre>
@@ -127,7 +127,7 @@ Get-FileHash .\Rowtrace.exe -Algorithm SHA256</pre>
         <li><strong>New backup.</strong> Tick the workspaces, folders, sheets and reports to back up, choose Now, once or On a schedule, and pick a save location.</li>
         <li><strong>Open the result.</strong> Each run makes a new timestamped folder holding an Excel copy of each sheet, a folder per row with that row's attachments, and a manifest that says which file came from which row.</li>
       </ol>
-      <p>The full walkthrough is in the <a href="#"><mark class="gap">GAP 7: link to the quick-start guide once its page exists</mark></a>. What happens to your token, step by step, is on <a href="#"><mark class="gap">GAP 8: link to the token page once it exists</mark></a>.</p>
+      <p>The full walkthrough is in the <a href="/rowtrace/partners/start/">getting-started guide</a>. What happens to your token, step by step, is on <a href="/rowtrace/partners/token/">Your token and your data</a>.</p>
     </section>
 
     <section>

@@ -1,4 +1,4 @@
-eskley.com company page, and the Rowtrace pages under `/rowtrace/` until rowtrace.com has its own DNS.
+eskley.com company page. The Rowtrace pages live at https://rowtrace.com/ (repo eskleyhq/rowtrace.com); each old `/rowtrace/` address here is a noindex page that forwards to its rowtrace.com counterpart.
 
 ## tokens.css
 
@@ -8,4 +8,4 @@ eskley.com company page, and the Rowtrace pages under `/rowtrace/` until rowtrac
 
 `/site.css` is the one stylesheet for every page: eskley.com (solid navy header and footer) and the Rowtrace pages (white header with an accent rule), picked by `data-site` on `<html>`. It comes from the site design artifact (https://claude.ai/artifact/GwpeeyTrcBDFnjZhVnCkqn, version 1791922948-497d) and takes every value from `/tokens.css`.
 
-The Rowtrace pages are `noindex`; the company page links to the Rowtrace home, the download page and the comparisons. Yellow `Gap` marks are facts still owed; resolve or cut each one before a page goes live.
+The company page links to the Rowtrace home, the download page and the comparisons on rowtrace.com. `/site.css` is shared with rowtrace.com, which holds a byte-for-byte copy; a change to it lands in both repos.
